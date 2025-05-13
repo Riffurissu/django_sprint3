@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class PublishedModel(models.Model):
     is_published = models.BooleanField(
         default=True,
@@ -17,6 +18,7 @@ class PublishedModel(models.Model):
     class Meta:
         abstract = True
 
+
 class Category(PublishedModel):
     title = models.CharField(
         max_length=256,
@@ -28,7 +30,10 @@ class Category(PublishedModel):
     slug = models.SlugField(
         unique=True,
         verbose_name='Идентификатор',
-        help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.'
+        help_text=(
+            'Идентификатор страницы для URL; разрешены символы латиницы, '
+            'цифры, дефис и подчёркивание.'
+        )
     )
 
     class Meta:
@@ -38,6 +43,7 @@ class Category(PublishedModel):
 
     def __str__(self):
         return self.title
+
 
 class Location(PublishedModel):
     name = models.CharField(
@@ -53,6 +59,7 @@ class Location(PublishedModel):
     def __str__(self):
         return self.name
 
+
 class Post(PublishedModel):
     title = models.CharField(
         max_length=256,
@@ -63,7 +70,10 @@ class Post(PublishedModel):
     )
     pub_date = models.DateTimeField(
         verbose_name='Дата и время публикации',
-        help_text='Если установить дату и время в будущем — можно делать отложенные публикации.'
+        help_text=(
+            'Если установить дату и время в будущем — можно делать '
+            'отложенные публикации.'
+        )
     )
     author = models.ForeignKey(
         User,
